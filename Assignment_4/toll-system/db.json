@@ -1,0 +1,68 @@
+{
+  "tollData": [
+    {
+      "id": 1,
+      "entry_point": "Karachi",
+      "exit_point": "Lahore",
+      "day": "tuesday",
+      "number_plate": "LLL-NNN",
+      "toll_paid": "250rs"
+    },
+    {
+      "id": 2,
+      "entry_point": "Rawalpindi",
+      "exit_point": "Lahore",
+      "day": "friday",
+      "number_plate": "LLL-NNN",
+      "toll_paid": "120rs"
+    },
+    {
+      "id": 3,
+      "entry_point": "Islamabad",
+      "exit_point": "Lahore",
+      "day": "Sunday",
+      "number_plate": "LLL-NNN",
+      "toll_paid": "150rs"
+    },
+    {
+      "entry_point": "pindi",
+      "exit_point": "ddf",
+      "day": "fff",
+      "number_plate": "fff",
+      "toll_paid": "vvv",
+      "id": 4
+    },
+    {
+      "entry_point": "dadsdsa",
+      "exit_point": "ds",
+      "day": "ds",
+      "number_plate": "ds",
+      "toll_paid": "ds",
+      "id": 5
+    },
+    {
+      "entry_point": "43",
+      "exit_point": "era",
+      "day": "err",
+      "number_plate": "ere",
+      "toll_paid": "eer",
+      "id": 6
+    },
+    {
+      "entry_point": "2323",
+      "exit_point": "23",
+      "day": "34",
+      "number_plate": "34",
+      "toll_paid": "434",
+      "id": 7
+    },
+    {
+      "entry_point": "",
+      "exit_point": "",
+      "day": "",
+      "number_plate": "",
+      "toll_paid": "",
+      "id": 8
+    }
+  ]
+}
