@@ -15,45 +15,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// const tableData = [
-//   {
-//     id: 1,
-//     first_name: "Dorolisa",
-//     last_name: "MacGille",
-//     email: "dmacgille0@ucoz.com",
-//     gender: "Female",
-//   },
-//   {
-//     id: 2,
-//     first_name: "Lissie",
-//     last_name: "Betteridge",
-//     email: "lbetteridge1@usda.gov",
-//     gender: "Female",
-//   },
-//   {
-//     id: 3,
-//     first_name: "Irina",
-//     last_name: "MacColgan",
-//     email: "imaccolgan2@merriam-webster.com",
-//     gender: "Female",
-//   },
-//   {
-//     id: 4,
-//     first_name: "Kristi",
-//     last_name: "Wheadon",
-//     email: "kwheadon3@merriam-webster.com",
-//     gender: "Polygender",
-//   },
-//   {
-//     id: 5,
-//     first_name: "Lesley",
-//     last_name: "Krzyzowski",
-//     email: "lkrzyzowski4@dion.ne.jp",
-//     gender: "Female",
-//     ip_address: "72.111.131.222",
-//   },
-// ];
-
 const Home = () => {
   const [tollData, setTollData] = useState([]);
 
@@ -64,6 +25,11 @@ const Home = () => {
   const loadData = async () => {
     const result = await axios.get("http://localhost:3001/tollData");
     setTollData(result.data);
+  };
+
+  const deleteTollData: any = async (id: any) => {
+    await axios.delete(`http://localhost:3001/tollData/${id}`);
+    loadData();
   };
 
   return (
@@ -79,7 +45,7 @@ const Home = () => {
             <TableCell>Toll Paid</TableCell>
             <TableCell>Operations</TableCell>
             <TableCell>
-              <Link href="/users/addData" sx={{ textDecoration: "none" }}>
+              <Link href="/data/add" sx={{ textDecoration: "none" }}>
                 <Button variant="outlined">Add Record</Button>{" "}
               </Link>
             </TableCell>
@@ -99,17 +65,17 @@ const Home = () => {
               <TableCell>{row.toll_paid}</TableCell>
               <TableCell>
                 <ButtonGroup>
-                  <Link>
+                  <Link href={`/data/edit/${row.id}`}>
                     <Button>
                       <EditIcon />
                     </Button>
                   </Link>
                   <Link>
-                    <Button>
+                    <Button onClick={() => deleteTollData(row.id)}>
                       <DeleteIcon />
                     </Button>
                   </Link>
-                  <Link>
+                  <Link href={`/data/view/${row.id}`}>
                     <Button>
                       <VisibilityIcon />
                     </Button>

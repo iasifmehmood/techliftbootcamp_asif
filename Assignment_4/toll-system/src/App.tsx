@@ -7,6 +7,8 @@ import NoPage from "./components/pages/NoPage";
 import "./App.css";
 import About from "./components/pages/About";
 import AddTollData from "./components/toll_data/AddTollData";
+import EditTollData from "./components/toll_data/EditTollData";
+import ViewTollData from "./components/toll_data/ViewTollData";
 
 function App() {
   return (
@@ -16,7 +18,9 @@ function App() {
           <Route index element={<Home></Home>}></Route>
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
-          <Route path="/users/addData" element={<AddTollData />}></Route>
+          <Route path="/data/add" element={<AddTollData />}></Route>
+          <Route path="/data/edit/:id" element={<EditTollData />}></Route>
+          <Route path="/data/view/:id" element={<ViewTollData />}></Route>
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
