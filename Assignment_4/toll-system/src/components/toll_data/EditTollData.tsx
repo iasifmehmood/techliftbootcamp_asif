@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditTollData = () => {
+const EditTollData: any = () => {
   const [tollData, setTollData] = useState({
     entry_point: "",
     exit_point: "",
@@ -20,11 +20,11 @@ const EditTollData = () => {
     setTollData({ ...tollData, [e.target.name]: e.target.value });
   };
 
-  let navigate = useNavigate();
+  let navigate: any = useNavigate();
 
   const onSubmit: any = async (e: any) => {
     e.preventDefault();
-    let response = await axios.put(
+    let response: any = await axios.put(
       //to update data
       `http://localhost:3001/tollData/${id}`,
       tollData
@@ -37,7 +37,7 @@ const EditTollData = () => {
     navigate("/"); // to navigatoe to home page
   };
 
-  const { id } = useParams();
+  const { id } = useParams(); // use to access id
 
   //load data see console
   useEffect(() => {

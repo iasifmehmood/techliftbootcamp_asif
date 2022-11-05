@@ -9,15 +9,7 @@
       "toll_paid": "250rs"
     },
     {
-      "entry_point": "pindi",
-      "exit_point": "ddf",
-      "day": "fff",
-      "number_plate": "fff",
-      "toll_paid": "vvv",
-      "id": 4
-    },
-    {
-      "entry_point": "dadsdsa",
+      "entry_point": "muree",
       "exit_point": "ds",
       "day": "ds",
       "number_plate": "ds",
@@ -25,20 +17,20 @@
       "id": 5
     },
     {
-      "entry_point": "43",
-      "exit_point": "era",
-      "day": "err",
-      "number_plate": "ere",
-      "toll_paid": "eer",
-      "id": 6
+      "entry_point": "asif",
+      "exit_point": "23",
+      "day": "2022-11-04",
+      "number_plate": "rer-545",
+      "toll_paid": "wqwqw",
+      "id": 9
     },
     {
-      "entry_point": "43",
-      "exit_point": "43",
-      "day": "43",
-      "number_plate": "43",
-      "toll_paid": "434",
-      "id": 8
+      "entry_point": "Khanpur Road Interchange",
+      "exit_point": "Jharikas interchange",
+      "day": "",
+      "number_plate": "",
+      "toll_paid": "2222222",
+      "id": 24
     }
   ]
 }
