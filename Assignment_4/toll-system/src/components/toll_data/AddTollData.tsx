@@ -4,18 +4,13 @@ import {
   Box,
   Button,
   Typography,
-  FormControlLabel,
 } from "@mui/material";
 import { TextField } from "@material-ui/core";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { resourceLimits } from "worker_threads";
+
 
 const AddTollData: any = () => {
   const [tollData, setTollData] = useState({
@@ -48,14 +43,10 @@ const AddTollData: any = () => {
     navigate("/"); // to navigatoe to home page
   };
 
-  const defaultDateValue = {
-    someDate: new Date().toISOString().substring(0, 10),
-  };
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  // Calculation of toll tax starts from here
+                                                       
+                                                // Toll Tax Calculation Starts From Here                    
   
   const perKmCharges: number = 0.2; //20% charges
 
@@ -69,123 +60,64 @@ const AddTollData: any = () => {
     "Abbottabad Interchange": 300,
   }
 
-  let entryValue=0;
-  let exitValue=0;
-  let entryPrice=20;
-  let exitPrice=0;
+  const WEEKDAYS: string[] = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const currentDay: any = WEEKDAYS[new Date(tollData.day).getDay()];
+
+  const getMonthFromDate:any=()=>{
+    return new Date(tollData.day).toLocaleString("default", { month: "long" });
+  }
+  
+  const getDate:any=()=>{
+    return new Date(tollData.day).getUTCDate();
+  }
+
+  const specialDay: any = getDate() +  " " + getMonthFromDate();
+
+  let entryValue:number=0;
+  let exitValue:number=0;
+  let entryPrice:number=20;
+  let exitPrice:number=0;
+
      for(let x in interchange){
-       if(JSON.stringify(tollData.entry_point)===JSON.stringify(x)){
+       if(JSON.stringify(tollData.entry_point)===JSON.stringify(x) ){
          entryValue= interchange[x];
          tollData.toll_paid = entryPrice.toString()
        }
      }
  
      for(let x in interchange){
-       if(JSON.stringify(tollData.exit_point)===JSON.stringify(x)){
+       if(JSON.stringify(tollData.exit_point)===JSON.stringify(x) ){
          exitValue=interchange[x];
          exitPrice= parseFloat((entryPrice+((perKmCharges)*Math.abs(exitValue-entryValue))).toFixed(2));  //maths.abs to get positive value everytime
          tollData.toll_paid = exitPrice.toString()
        }
+       if(JSON.stringify(tollData.exit_point)===JSON.stringify(x) && ["Saturday", "Sunday"].includes(currentDay)){
+         exitValue=interchange[x];
+         exitPrice= parseFloat((entryPrice+((perKmCharges)*Math.abs(exitValue-entryValue))).toFixed(2));  //maths.abs to get positive value everytime
+         tollData.toll_paid = (exitPrice*1.5).toString()  //1.5x on weekend
+       }
+        if (JSON.stringify(tollData.exit_point)===JSON.stringify(x) && ["23 March", "14 August", "25 December"].includes(specialDay)) {
+        exitValue=interchange[x];
+        exitPrice= parseFloat((entryPrice+((perKmCharges)*Math.abs(exitValue-entryValue))).toFixed(2));  //maths.abs to get positive value everytime
+        tollData.toll_paid = (exitPrice*0.5).toString()   //0.5 discount on special days
+      }
+
      }
 
+                                                        // Toll Tax Calculation Starts From Here
 
-   // const WEEKDAYS: s[] = [
-  //   "Sunday",
-  //   "Monday",
-  //   "Tuesday",
-  //   "Wednesday",
-  //   "Thursday",
-  //   "Friday",
-  //   "Saturday",
-  // ];
+                                                      
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // if (tollData.exit_point === "Segregation Toll Plaza") {
-
-  //     const entryTollPaid = 20;
-  //     tollData.toll_paid = entryTollPaid.toString();
-    
-  // }
-
-  // if (tollData.exit_point === "Jharikas interchange") {
-  //   const currentDay: any = WEEKDAYS[new Date().getDay()];
-  //   tollData.day=currentDay;
-  //   if (["Saturday", "Sunday"].includes(currentDay)) {
-  //     const entryTollPaid = 20 + (1.5 * 5);
-  //     tollData.toll_paid = entryTollPaid.toString();
-  //   } else {
-  //     const entryTollPaid = 20 + (0.2 * 5);
-  //     tollData.toll_paid = entryTollPaid.toString();
-  //   }
-  // }
-
-  // if (tollData.exit_point === "Kot Najeeb Ullah interchange") {
-  //   const currentDay: any = WEEKDAYS[new Date().getDay()];
-  //   tollData.day=currentDay;
-  //   if (["Saturday", "Sunday"].includes(currentDay)) {
-  //     const entryTollPaid = 20 + (1.5 * 10);
-  //     tollData.toll_paid = entryTollPaid.toString();
-  //   } else {
-  //     const entryTollPaid = 20 + (0.2 * 10);
-  //     tollData.toll_paid = entryTollPaid.toString();
-  //   }
-  // }
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  // const handleChange: any = (e: any) => {
-  //   setINTERCHANGESGAP(e.target.value as string);
-  // };
-
-  // const Common: any = {
-  //   getDistanceCharges: (entry: any) => {
-  //     const distanceCharges = parseFloat(
-  //       (
-  //         PERKMCHARGES *
-  //         (INTERCHANGESGAP[entry.exit_interchange] -
-  //           INTERCHANGESGAP[entry.interchange])
-  //       ).toFixed(2)
-  //     );
-
-  //     const currentDay: any = WEEKDAYS[new Date(entry.exit_date_time).getDay()];
-  //     if (["Saturday", "Sunday"].includes(currentDay)) {
-  //       return 1.5 * distanceCharges;
-  //     }
-  //     return distanceCharges;
-  //   },
-
-  //   getDiscount: (entry: any) => {
-  //     const specialDay: any =
-  //       Common.getDate(entry.date_time) +
-  //       " " +
-  //       Common.getMonthFromDate(entry.date_time);
-  //     const currentDay: any = WEEKDAYS[new Date(entry.date_time).getDay()];
-  //     const vehicleDigitNum: n = entry.number_plate.split("-")[1];
-
-  //     if (["23 March", "14 August", "25 December"].includes(specialDay)) {
-  //       return 0.5; //50% discount
-  //     }
-
-  //     if (
-  //       (["Monday", "Wednesday"].includes(currentDay) &&
-  //         vehicleDigitNum % 2 === 0) ||
-  //       (["Tuesday", "Thursday"].includes(currentDay) &&
-  //         vehicleDigitNum % 2 !== 0)
-  //     ) {
-  //       return 0.1; //10% discount
-  //     }
-
-  //     return 0; //no discount
-  //   },
-
-  //   getMonthFromDate: (dateString: s) => {
-  //     return new Date(dateString).toLocaleString("default", { month: "long" });
-  //   },
-
-  //   getDate: (dateString: s) => {
-  //     return new Date(dateString).getUTCDate();
-  //   },
-  // };
-
-  // Calculation of toll tax ends from here
 
   return (
     <Box
@@ -202,14 +134,6 @@ const AddTollData: any = () => {
             Enter Information
           </Typography>
 
-          {/* <TextField
-            label="Enter Entry Point"
-            name="entry_point"
-            value={entry_point}
-            onChange={(e) => onInputChange(e)}
-            required
-          /> */}
-
           <form onSubmit={handleFormSubmit}>
             <TextField
               label="Select Entry Point"
@@ -217,7 +141,6 @@ const AddTollData: any = () => {
               name="entry_point"
               value={entry_point}
               onChange={e => onInputChange(e)}
-              // onClick={e => handleChange(e)}
               required
               select
             >
@@ -250,7 +173,6 @@ const AddTollData: any = () => {
               name="exit_point"
               value={exit_point}
               onChange={e => onInputChange(e)}
-              // onClick={e => handleChange(e)}
               required
               select
             >
@@ -276,19 +198,28 @@ const AddTollData: any = () => {
                 Abbottabad Interchange
               </MenuItem>
             </TextField>
-{/* 
+
+            <TextField
+            label="Enter Car Number Plate"
+            name="number_plate"
+            onChange={(e) => onInputChange(e)}
+            value={number_plate}
+            fullWidth
+            required
+            inputProps={{ pattern: "[A-Z]{1,3}[-][1-9]{1,3}" }}
+            helperText="Please Enter in this format LLL-NNN"
+          />
+
             <TextField
             label=""
             name="day"
             value={day}
             onChange={(e: any) => onInputChange(e)}
-            defaultValue={defaultDateValue}
             type="date"
             fullWidth
-          /> */}
+          />
 
             <TextField
-              // label="Enter Toll Paid"
               name="toll_paid"
               value={toll_paid}
               onChange={e => onInputChange(e)}
@@ -352,6 +283,7 @@ const AddTollData: any = () => {
         </Stack>
       </Stack>
     </Box>
+    
   );
 };
 export default AddTollData;
