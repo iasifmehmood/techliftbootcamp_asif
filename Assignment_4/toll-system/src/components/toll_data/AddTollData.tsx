@@ -241,45 +241,6 @@ const AddTollData: any = () => {
               </Button>
             </Stack>
           </form>
-
-          {/* <TextField
-            label="Enter Exit Point"
-            name="exit_point"
-            value={exit_point}
-            onChange={(e) => onInputChange(e)}
-            fullWidth
-            required
-          /> */}
-
-          {/* <TextField
-            label="Enter Car Number Plate"
-            name="number_plate"
-            onChange={(e) => onInputChange(e)}
-            value={number_plate}
-            required
-          />
-          <TextField
-            label="Enter Toll Paid"
-            name="toll_paid"
-            value={toll_paid}
-            onChange={(e) => onInputChange(e)}
-            required
-          />
-
-          <TextField
-            label=""
-            name="day"
-            value={day}
-            onChange={(e: any) => onInputChange(e)}
-            defaultValue={defaultDateValue}
-            type="date"
-          /> */}
-
-          {/* <Stack>
-            <Button onClick={handleFormSubmit} variant="contained" type="submit">
-              Add Data
-            </Button>
-          </Stack> */}
         </Stack>
       </Stack>
     </Box>
