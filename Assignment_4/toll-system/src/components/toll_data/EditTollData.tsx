@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
+import swal from 'sweetalert';
 
 const EditTollData: any = () => {
   const [tollData, setTollData] = useState({
@@ -31,9 +32,9 @@ const EditTollData: any = () => {
       tollData
     );
     if (response) {
-      alert("data submited");
+      swal("Data Updated!", "You are redirected to the Homepage!", "success");
     } else {
-      alert("not submit");
+      swal("Data not submit! Please try Again");
     }
     navigate("/"); // to navigatoe to home page
   };

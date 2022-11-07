@@ -10,6 +10,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
+import swal from 'sweetalert';
 
 
 const AddTollData: any = () => {
@@ -36,9 +37,9 @@ const AddTollData: any = () => {
       tollData
     );
     if (response) {
-      alert("data submited");
+      swal("Data Submitted!", "You are redirected to the Homepage!", "success");
     } else {
-      alert("not submit");
+      swal("Data not submit! Please try Again");
     }
     navigate("/"); // to navigatoe to home page
   };
