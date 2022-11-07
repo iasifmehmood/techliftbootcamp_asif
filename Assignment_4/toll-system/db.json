@@ -25,12 +25,12 @@
       "id": 9
     },
     {
-      "entry_point": "Khanpur Road Interchange",
-      "exit_point": "Jharikas interchange",
+      "entry_point": "Kot Najeeb Ullah interchange",
+      "exit_point": "Abbottabad Interchange",
       "day": "",
       "number_plate": "",
-      "toll_paid": "2222222",
-      "id": 24
+      "toll_paid": "65",
+      "id": 10
     }
   ]
 }

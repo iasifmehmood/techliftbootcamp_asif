@@ -15,6 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { resourceLimits } from "worker_threads";
 
 const AddTollData: any = () => {
   const [tollData, setTollData] = useState({
@@ -22,7 +23,7 @@ const AddTollData: any = () => {
     exit_point: "",
     day: "",
     number_plate: "",
-    toll_paid: null,
+    toll_paid: "0",
   });
 
   const { entry_point, exit_point, day, number_plate, toll_paid } = tollData;
@@ -51,28 +52,44 @@ const AddTollData: any = () => {
     someDate: new Date().toISOString().substring(0, 10),
   };
 
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   // Calculation of toll tax starts from here
-  type s = string;
-  type n = number;
-  const toll = 25;
+  
+  const perKmCharges: number = 0.2; //20% charges
 
-  const PERKMCHARGES: n = 0.2; //20% charges
-
-  const [INTERCHANGESGAP, setINTERCHANGESGAP] = useState<any>({
+  const interchange:any={
     "Segregation Toll Plaza": 0,
-    "Jharikas interchange": 5,
-    "Kot Najeeb Ullah interchange": 10,
-    "Khanpur Road Interchange": 17,
-    "Shah Maqsood Interchange": 24,
-    "Havelian Interchange": 29,
-    "Abbottabad Interchange": 34,
-  });
+    "Jharikas interchange": 25,
+    "Kot Najeeb Ullah interchange": 75,
+    "Khanpur Road Interchange": 140,
+    "Shah Maqsood Interchange": 210,
+    "Havelian Interchange": 260,
+    "Abbottabad Interchange": 300,
+  }
 
-  const handleChange: any = (e: any) => {
-    setINTERCHANGESGAP(e.target.value as string);
-  };
+  let entryValue=0;
+  let exitValue=0;
+  let entryPrice=20;
+  let exitPrice=0;
+     for(let x in interchange){
+       if(JSON.stringify(tollData.entry_point)===JSON.stringify(x)){
+         entryValue= interchange[x];
+         tollData.toll_paid = entryPrice.toString()
+       }
+     }
+ 
+     for(let x in interchange){
+       if(JSON.stringify(tollData.exit_point)===JSON.stringify(x)){
+         exitValue=interchange[x];
+         exitPrice= parseFloat((entryPrice+((perKmCharges)*Math.abs(exitValue-entryValue))).toFixed(2));  //maths.abs to get positive value everytime
+         tollData.toll_paid = exitPrice.toString()
+       }
+     }
 
-  // const WEEKDAYS: s[] = [
+
+   // const WEEKDAYS: s[] = [
   //   "Sunday",
   //   "Monday",
   //   "Tuesday",
@@ -81,6 +98,42 @@ const AddTollData: any = () => {
   //   "Friday",
   //   "Saturday",
   // ];
+
+  // if (tollData.exit_point === "Segregation Toll Plaza") {
+
+  //     const entryTollPaid = 20;
+  //     tollData.toll_paid = entryTollPaid.toString();
+    
+  // }
+
+  // if (tollData.exit_point === "Jharikas interchange") {
+  //   const currentDay: any = WEEKDAYS[new Date().getDay()];
+  //   tollData.day=currentDay;
+  //   if (["Saturday", "Sunday"].includes(currentDay)) {
+  //     const entryTollPaid = 20 + (1.5 * 5);
+  //     tollData.toll_paid = entryTollPaid.toString();
+  //   } else {
+  //     const entryTollPaid = 20 + (0.2 * 5);
+  //     tollData.toll_paid = entryTollPaid.toString();
+  //   }
+  // }
+
+  // if (tollData.exit_point === "Kot Najeeb Ullah interchange") {
+  //   const currentDay: any = WEEKDAYS[new Date().getDay()];
+  //   tollData.day=currentDay;
+  //   if (["Saturday", "Sunday"].includes(currentDay)) {
+  //     const entryTollPaid = 20 + (1.5 * 10);
+  //     tollData.toll_paid = entryTollPaid.toString();
+  //   } else {
+  //     const entryTollPaid = 20 + (0.2 * 10);
+  //     tollData.toll_paid = entryTollPaid.toString();
+  //   }
+  // }
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  // const handleChange: any = (e: any) => {
+  //   setINTERCHANGESGAP(e.target.value as string);
+  // };
 
   // const Common: any = {
   //   getDistanceCharges: (entry: any) => {
@@ -163,8 +216,8 @@ const AddTollData: any = () => {
               fullWidth
               name="entry_point"
               value={entry_point}
-              onChange={(e) => onInputChange(e)}
-              onClick={(e) => handleChange(e)}
+              onChange={e => onInputChange(e)}
+              // onClick={e => handleChange(e)}
               required
               select
             >
@@ -196,8 +249,8 @@ const AddTollData: any = () => {
               fullWidth
               name="exit_point"
               value={exit_point}
-              onChange={(e) => onInputChange(e)}
-              onClick={(e) => handleChange(e)}
+              onChange={e => onInputChange(e)}
+              // onClick={e => handleChange(e)}
               required
               select
             >
@@ -223,24 +276,33 @@ const AddTollData: any = () => {
                 Abbottabad Interchange
               </MenuItem>
             </TextField>
+{/* 
+            <TextField
+            label=""
+            name="day"
+            value={day}
+            onChange={(e: any) => onInputChange(e)}
+            defaultValue={defaultDateValue}
+            type="date"
+            fullWidth
+          /> */}
 
-            <Button variant="outlined" onClick={(e) => onInputChange(e)}>
-              <TextField
-                // label="Enter Toll Paid"
-                name="toll_paid"
-                value={toll_paid}
-                defaultValue={toll}
-                onChange={(e) => onInputChange(e)}
-                required
-                disabled
-                fullWidth
-              />
-              calculate
-            </Button>
+            <TextField
+              // label="Enter Toll Paid"
+              name="toll_paid"
+              value={toll_paid}
+              onChange={e => onInputChange(e)}
+              required
+              inputProps={
+                { readOnly: true, }
+              }
+              fullWidth
+              helperText="Toll Tax Price"
+            />
 
             <Stack sx={{ marginTop: "20px" }}>
               <Button
-                onChange={(e) => onInputChange(e)}
+                onChange={e => onInputChange(e)}
                 type="submit"
                 variant="contained"
               >
