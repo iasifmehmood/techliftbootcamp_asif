@@ -15,14 +15,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Home = () => {
+const Home:any = () => {
   const [tollData, setTollData] = useState([]);
 
   useEffect(() => {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData:any = async () => {
     const result = await axios.get("http://localhost:3001/tollData");
     setTollData(result.data);
   };
@@ -46,7 +46,7 @@ const Home = () => {
             <TableCell>Operations</TableCell>
             <TableCell>
               <Link href="/data/add" sx={{ textDecoration: "none" }}>
-                <Button variant="outlined">Add Record</Button>{" "}
+                <Button variant="outlined">Add Record</Button>
               </Link>
             </TableCell>
           </TableRow>
