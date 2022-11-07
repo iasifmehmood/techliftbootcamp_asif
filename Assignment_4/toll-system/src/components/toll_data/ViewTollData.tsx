@@ -5,16 +5,13 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Button,
-  ButtonGroup,
-  Link,
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-const ViewTollData = () => {
+const ViewTollData: any = () => {
   const [tollData, setTollData] = useState({
     id: "",
     entry_point: "",
@@ -28,7 +25,7 @@ const ViewTollData = () => {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData: any = async () => {
     const result = await axios.get("http://localhost:3001/tollData");
     setTollData(result.data);
   };
