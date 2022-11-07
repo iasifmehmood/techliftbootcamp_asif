@@ -1,36 +1,12 @@
 {
   "tollData": [
     {
-      "id": 1,
-      "entry_point": "Karachi",
-      "exit_point": "Lahore",
-      "day": "tuesday",
-      "number_plate": "LLL-NNN",
-      "toll_paid": "250rs"
-    },
-    {
-      "entry_point": "muree",
-      "exit_point": "ds",
-      "day": "ds",
-      "number_plate": "ds",
-      "toll_paid": "66",
-      "id": 5
-    },
-    {
-      "entry_point": "asif",
-      "exit_point": "23",
-      "day": "2022-11-04",
-      "number_plate": "rer-545",
-      "toll_paid": "wqwqw",
-      "id": 9
-    },
-    {
-      "entry_point": "Kot Najeeb Ullah interchange",
-      "exit_point": "Abbottabad Interchange",
-      "day": "",
-      "number_plate": "",
-      "toll_paid": "65",
-      "id": 10
+      "entry_point": "Khanpur Road Interchange",
+      "exit_point": "Khanpur Road Interchange",
+      "day": "2022-11-07",
+      "number_plate": "WEE-123",
+      "toll_paid": "20",
+      "id": 1
     }
   ]
 }

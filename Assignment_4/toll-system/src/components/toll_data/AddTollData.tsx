@@ -10,7 +10,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
-//import MaskedInput from 'react-text-mask';
+
 
 const AddTollData: any = () => {
   const [tollData, setTollData] = useState({
@@ -48,7 +48,6 @@ const AddTollData: any = () => {
                                                        
                                                 // Toll Tax Calculation Starts From Here                    
   
-
   const perKmCharges: number = 0.2; //20% charges
 
   const interchange:any={
@@ -77,7 +76,7 @@ const AddTollData: any = () => {
     return new Date(tollData.day).toLocaleString("default", { month: "long" });
   }
   
-  const getDate=()=>{
+  const getDate:any=()=>{
     return new Date(tollData.day).getUTCDate();
   }
 
@@ -135,14 +134,6 @@ const AddTollData: any = () => {
             Enter Information
           </Typography>
 
-          {/* <TextField
-            label="Enter Entry Point"
-            name="entry_point"
-            value={entry_point}
-            onChange={(e) => onInputChange(e)}
-            required
-          /> */}
-
           <form onSubmit={handleFormSubmit}>
             <TextField
               label="Select Entry Point"
@@ -150,7 +141,6 @@ const AddTollData: any = () => {
               name="entry_point"
               value={entry_point}
               onChange={e => onInputChange(e)}
-              // onClick={e => handleChange(e)}
               required
               select
             >
@@ -183,7 +173,6 @@ const AddTollData: any = () => {
               name="exit_point"
               value={exit_point}
               onChange={e => onInputChange(e)}
-              // onClick={e => handleChange(e)}
               required
               select
             >
@@ -217,7 +206,8 @@ const AddTollData: any = () => {
             value={number_plate}
             fullWidth
             required
-            
+            inputProps={{ pattern: "[A-Z]{1,3}[-][1-9]{1,3}" }}
+            helperText="Please Enter in this format LLL-NNN"
           />
 
             <TextField
@@ -225,13 +215,11 @@ const AddTollData: any = () => {
             name="day"
             value={day}
             onChange={(e: any) => onInputChange(e)}
-            //defaultValue={defaultDateValue}
             type="date"
             fullWidth
           />
 
             <TextField
-              // label="Enter Toll Paid"
               name="toll_paid"
               value={toll_paid}
               onChange={e => onInputChange(e)}
