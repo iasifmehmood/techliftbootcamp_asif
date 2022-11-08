@@ -23,6 +23,38 @@
       "number_plate": "GGG-565",
       "toll_paid": "34",
       "id": 3
+    },
+    {
+      "entry_point": "Khanpur Road Interchange",
+      "exit_point": "Kot Najeeb Ullah interchange",
+      "day": "2022-11-08",
+      "number_plate": "ABC-123",
+      "toll_paid": "33",
+      "id": 4
+    },
+    {
+      "entry_point": "Jharikas interchange",
+      "exit_point": "Khanpur Road Interchange",
+      "day": "2022-11-09",
+      "number_plate": "AXC-154",
+      "toll_paid": "43",
+      "id": 5
+    },
+    {
+      "entry_point": "Kot Najeeb Ullah interchange",
+      "exit_point": "Havelian Interchange",
+      "day": "2022-08-14",
+      "number_plate": "AXC-555",
+      "toll_paid": "28.5",
+      "id": 6
+    },
+    {
+      "entry_point": "Segregation Toll Plaza",
+      "exit_point": "Khanpur Road Interchange",
+      "day": "2022-11-12",
+      "number_plate": "XNX-235",
+      "toll_paid": "72",
+      "id": 7
     }
   ]
 }

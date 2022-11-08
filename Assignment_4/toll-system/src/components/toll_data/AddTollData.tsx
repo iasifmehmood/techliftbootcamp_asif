@@ -4,12 +4,13 @@ import {
   Box,
   Button,
   Typography,
+  MenuItem,
+  TextField,
+  Grid
 } from "@mui/material";
-import { TextField } from "@material-ui/core";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import MenuItem from "@mui/material/MenuItem";
 import swal from 'sweetalert';
 
 
@@ -22,7 +23,7 @@ const AddTollData: any = () => {
     toll_paid: "0",
   });
 
-  const { entry_point, exit_point, day, number_plate, toll_paid } = tollData;
+  const { entry_point, exit_point, day, number_plate, toll_paid } = tollData; //const destructiong for accessing tollData.entry_point etc
 
   const onInputChange: any = (e: any) => {
     setTollData({ ...tollData, [e.target.name]: e.target.value });
@@ -87,6 +88,9 @@ const AddTollData: any = () => {
   let exitValue:number=0;
   let entryPrice:number=20;
   let exitPrice:number=0;
+  let normalPrice:any;
+  let oneXPrice:any;
+  let discountPrice:any;
 
      for(let x in interchange){
        if(JSON.stringify(tollData.entry_point)===JSON.stringify(x) ){
@@ -99,17 +103,20 @@ const AddTollData: any = () => {
        if(JSON.stringify(tollData.exit_point)===JSON.stringify(x) ){
          exitValue=interchange[x];
          exitPrice= parseFloat((entryPrice+((perKmCharges)*Math.abs(exitValue-entryValue))).toFixed(2));  //maths.abs to get positive value everytime
-         tollData.toll_paid = exitPrice.toString()
+         tollData.toll_paid = exitPrice.toString();
+         normalPrice=parseFloat(tollData.toll_paid);
        }
        if(JSON.stringify(tollData.exit_point)===JSON.stringify(x) && ["Saturday", "Sunday"].includes(currentDay)){
          exitValue=interchange[x];
          exitPrice= parseFloat((entryPrice+((perKmCharges)*Math.abs(exitValue-entryValue))).toFixed(2));  //maths.abs to get positive value everytime
          tollData.toll_paid = (exitPrice*1.5).toString()  //1.5x on weekend
+         oneXPrice=parseFloat(tollData.toll_paid);
        }
         if (JSON.stringify(tollData.exit_point)===JSON.stringify(x) && ["23 March", "14 August", "25 December"].includes(specialDay)) {
         exitValue=interchange[x];
         exitPrice= parseFloat((entryPrice+((perKmCharges)*Math.abs(exitValue-entryValue))).toFixed(2));  //maths.abs to get positive value everytime
         tollData.toll_paid = (exitPrice*0.5).toString()   //0.5 discount on special days
+        discountPrice=parseFloat(tollData.toll_paid);
       }
 
      }
@@ -123,19 +130,30 @@ const AddTollData: any = () => {
   return (
     <Box
       sx={{
-        width: 300,
-        height: 300,
+        width: "100%",
+        height: "100%",
         margin: "auto",
-        marginTop: "50px",
+        marginTop: "25px",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent:"center"
       }}
     >
-      <Stack spacing={4}>
-        <Stack direction="column" spacing={2} alignItems="center">
-          <Typography variant="h5" textAlign="center">
-            Enter Information
-          </Typography>
+      <Box sx={{
+        width: "30%",
+        height: "50%",
+        }} >        
 
           <form onSubmit={handleFormSubmit}>
+        
+        <Grid container direction={"column"} spacing={2}>
+
+        <Grid item>
+        <Typography variant="h5" textAlign="center">
+            Enter Information
+          </Typography>
+        </Grid>
+          <Grid item>
             <TextField
               label="Select Entry Point"
               fullWidth
@@ -167,7 +185,9 @@ const AddTollData: any = () => {
                 Abbottabad Interchange
               </MenuItem>
             </TextField>
+        </Grid>
 
+        <Grid item>
             <TextField
               label="Select Exit Point"
               fullWidth
@@ -199,7 +219,9 @@ const AddTollData: any = () => {
                 Abbottabad Interchange
               </MenuItem>
             </TextField>
+        </Grid>
 
+        <Grid item>
             <TextField
             label="Enter Car Number Plate"
             name="number_plate"
@@ -209,8 +231,11 @@ const AddTollData: any = () => {
             required
             inputProps={{ pattern: "[A-Z]{1,3}[-][1-9]{1,3}" }}
             helperText="Please Enter in this format LLL-NNN"
+            placeholder="Use this format LLL-NNN"
           />
+          </Grid>
 
+          <Grid item>
             <TextField
             label=""
             name="day"
@@ -218,20 +243,26 @@ const AddTollData: any = () => {
             onChange={(e: any) => onInputChange(e)}
             type="date"
             fullWidth
+            helperText="Select Date"
           />
+          </Grid>
 
+          <Grid item>
             <TextField
               name="toll_paid"
               value={toll_paid}
               onChange={e => onInputChange(e)}
               required
               inputProps={
-                { readOnly: true, }
+                { readOnly: true, style: { textAlign: "center" }, }
               }
               fullWidth
               helperText="Toll Tax Price"
+              variant="outlined"
             />
+          </Grid>
 
+          <Grid item> 
             <Stack sx={{ marginTop: "20px" }}>
               <Button
                 onChange={e => onInputChange(e)}
@@ -241,9 +272,25 @@ const AddTollData: any = () => {
                 Add Data
               </Button>
             </Stack>
+            </Grid>
+            </Grid>
           </form>
-        </Stack>
-      </Stack>
+      </Box>
+
+      <Box sx={{
+        width: "20%",
+        height: "50%",
+        display: 'flex',
+        marginTop: "200px",
+        marginLeft:"25px"
+        }} >
+        <Box sx={{ border: 1 }}>
+        <Typography variant="h6" align="center">Toll Tax Prices</Typography>
+        <Typography >Normal Price is : {normalPrice || 0}</Typography>
+        <Typography >1.5x Price On Weekends is : {oneXPrice || 0}</Typography>
+        <Typography >0.5 % Discount on Special Day {discountPrice || 0}</Typography>
+        </Box>
+      </Box>
     </Box>
     
   );
