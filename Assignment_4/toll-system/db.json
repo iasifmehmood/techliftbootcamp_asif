@@ -47,6 +47,14 @@
       "number_plate": "AXC-555",
       "toll_paid": "28.5",
       "id": 6
+    },
+    {
+      "entry_point": "Segregation Toll Plaza",
+      "exit_point": "Khanpur Road Interchange",
+      "day": "2022-11-12",
+      "number_plate": "XNX-235",
+      "toll_paid": "72",
+      "id": 7
     }
   ]
 }
