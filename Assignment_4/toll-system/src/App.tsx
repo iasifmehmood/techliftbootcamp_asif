@@ -9,6 +9,7 @@ import About from "./components/pages/About";
 import AddTollData from "./components/toll_data/AddTollData";
 import EditTollData from "./components/toll_data/EditTollData";
 import ViewTollData from "./components/toll_data/ViewTollData";
+import ViewMoreDetail from "./components/toll_data/ViewMoreDetail";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/data/add" element={<AddTollData />}></Route>
           <Route path="/data/edit/:id" element={<EditTollData />}></Route>
           <Route path="/data/view/:id" element={<ViewTollData />}></Route>
+          <Route path="/data/detail/:id" element={<ViewMoreDetail />}></Route>
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
