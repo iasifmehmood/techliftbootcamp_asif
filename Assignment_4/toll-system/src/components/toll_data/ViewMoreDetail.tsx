@@ -1,11 +1,11 @@
 import React from "react";
-import { Stack, Box, Button, Typography,TextField,MenuItem,Grid } from "@mui/material";
+import { Stack, Box, Button, Typography,TextField,MenuItem,Grid,Link } from "@mui/material";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import swal from 'sweetalert';
 
-const EditTollData: any = () => {
+const ViewMoreDetail: any = () => {
   const [tollData, setTollData] = useState({
     entry_point: "",
     exit_point: "",
@@ -22,20 +22,6 @@ const EditTollData: any = () => {
 
   let navigate: any = useNavigate();
 
-  const handleFormSubmit: any = async (e: any) => {
-    e.preventDefault();
-    let response: any = await axios.put(
-      //to update data
-      `http://localhost:3001/tollData/${id}`,
-      tollData
-    );
-    if (response) {
-      swal("Data Updated!", "You are redirected to the Homepage!", "success");
-    } else {
-      swal("Data not submit! Please try Again");
-    }
-    navigate("/"); // to navigatoe to home page
-  };
 
   const { id } = useParams(); // use to access id
 
@@ -49,6 +35,9 @@ const EditTollData: any = () => {
     setTollData(result.data);
   };
 
+  const reDirect:any=()=>{
+    swal("Redirected To Homepage");
+  }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                                                        
@@ -148,7 +137,7 @@ const EditTollData: any = () => {
         height: "50%",
         }} >        
 
-          <form onSubmit={handleFormSubmit}>
+          <form>
         
         <Grid container direction={"column"} spacing={2}>
 
@@ -166,6 +155,9 @@ const EditTollData: any = () => {
               onChange={e => onInputChange(e)}
               required
               select
+              inputProps={
+                { readOnly: true}
+              }
             >
               <MenuItem value="Segregation Toll Plaza">
                 Segregation Toll Plaza
@@ -200,6 +192,9 @@ const EditTollData: any = () => {
               onChange={e => onInputChange(e)}
               required
               select
+              inputProps={
+                { readOnly: true}
+              }
             >
               <MenuItem value="Segregation Toll Plaza">
                 Segregation Toll Plaza
@@ -233,7 +228,7 @@ const EditTollData: any = () => {
             value={number_plate}
             fullWidth
             required
-            inputProps={{ pattern: "[A-Z]{1,3}[-][1-9]{1,3}" }}
+            inputProps={{ pattern: "[A-Z]{1,3}[-][1-9]{1,3}", readOnly:true }}
             helperText="Please Enter in this format LLL-NNN"
             placeholder="Use this format LLL-NNN"
           />
@@ -248,6 +243,9 @@ const EditTollData: any = () => {
             type="date"
             fullWidth
             helperText="Select Date"
+            inputProps={
+                { readOnly: true}
+              }
           />
           </Grid>
 
@@ -265,16 +263,16 @@ const EditTollData: any = () => {
               variant="outlined"
             />
           </Grid>
-
           <Grid item> 
-            <Stack sx={{ marginTop: "20px" }}>
+            <Stack sx={{ marginTop: "20px", alignItems:"center" }}>
+             <Link href="/">
               <Button
-                onChange={e => onInputChange(e)}
-                type="submit"
                 variant="contained"
+                onClick={()=>reDirect()}
               >
-                Add Data
+                Back to Home
               </Button>
+              </Link>
             </Stack>
             </Grid>
             </Grid>
@@ -299,4 +297,4 @@ const EditTollData: any = () => {
     
   );
 };
-export default EditTollData;
+export default ViewMoreDetail;

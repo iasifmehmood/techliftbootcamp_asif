@@ -57,7 +57,7 @@ const Home:any = () => {
               key={row.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell>{row.id}</TableCell>
+              <TableCell><Link href={`/data/detail/${row.id}`}>{row.id}</Link></TableCell>
               <TableCell>{row.entry_point}</TableCell>
               <TableCell>{row.exit_point}</TableCell>
               <TableCell>{row.day}</TableCell>
